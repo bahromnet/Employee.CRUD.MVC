@@ -18,6 +18,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain.MVC\Domain.MVC.csproj" />
+    <Folder Include="Commons\AutoMappings\" />
+    <Folder Include="Commons\Exceptions\" />
+    <Folder Include="Commons\Interfaces\" />
+    <Folder Include="Commons\Models\" />
+    <Folder Include="Commons\Services\" />
+    <Folder Include="UseCases\" />
   </ItemGroup>
 
 </Project>
