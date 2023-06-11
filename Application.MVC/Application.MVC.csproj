@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Commons\AutoMappings\" />
+    <Folder Include="Commons\Exceptions\" />
+    <Folder Include="Commons\Interfaces\" />
+    <Folder Include="Commons\Models\" />
+    <Folder Include="Commons\Services\" />
+    <Folder Include="UseCases\" />
+  </ItemGroup>
+
+</Project>
