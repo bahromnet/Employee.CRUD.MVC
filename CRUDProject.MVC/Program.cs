@@ -1,3 +1,6 @@
+using Application.MVC;
+using Infrastructure.MVC;
+
 namespace CRUDProject.MVC
 {
     public class Program
@@ -5,6 +8,9 @@ namespace CRUDProject.MVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddInfrstructure(builder.Configuration);
+            builder.Services.AddApplication();
 
             builder.Services.AddControllersWithViews();
 

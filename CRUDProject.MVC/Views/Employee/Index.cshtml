@@ -1,0 +1,61 @@
+﻿@using Application.MVC.Commons.Models;
+@using Domain.MVC.Entities;
+@model IEnumerable<EmployeeDto>;
+@{
+    ViewData["Title"] = "Index";
+    PaginatedList paginatedList = new PaginatedList();
+    int pageNo = 0;
+    if (ViewBag.PaginatedList != null)
+    {
+        paginatedList = ViewBag.PaginatedList;
+        pageNo = paginatedList.CurrentPage;
+    }
+}
+
+<h1>Customers</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-sm btn-success ml-1">Create New</a>
+</p>
+
+<partial name="_pager" model="@paginatedList"/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentId);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HireDate);
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.FullName</td>
+                <td>@employee.DepartmentId</td>
+                <td>@employee.Salary</td>
+                <td>@employee.HireDate</td>
+                <td>
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-sm btn-info">Edit</a>
+                        <a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-sm btn-primary ml-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_pager" model="@paginatedList" />

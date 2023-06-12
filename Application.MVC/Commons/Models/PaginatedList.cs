@@ -2,27 +2,48 @@
 
 namespace Application.MVC.Commons.Models;
 
-public class PaginatedList<T>
+public class PaginatedList
 {
-    public IReadOnlyCollection<T> Items { get; set; }
-    public int PageNumber { get; set; }
-    public int TotalPages { get; set; }
-    public int TotalCount { get; set; }
+    public int TotalItems { get; private set; }
+    public int CurrentPage { get; private set; }
+    public int PageSize { get; private set; }
+    public int TotalPages { get; private set; }
+    public int StartPage { get; private set; }
+    public int EndPage { get; private set; }
 
-    public PaginatedList(IReadOnlyCollection<T> items, int pageNumber, int totalPages, int totalCount)
+    public PaginatedList()
     {
-        Items = items;
-        PageNumber = pageNumber;
-        TotalPages = (int)Math.Ceiling(totalCount / (double)totalPages);
-        TotalCount = totalCount;
     }
 
-    public bool HasPreviousPage => PageNumber > 1;
-    public bool HasNextPage => PageNumber < TotalPages;
-    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageNUmber,  int pageSize)
+    public PaginatedList(int totalItems, int page, int pageSize = 10)
     {
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageNUmber - 1) * pageSize).Take(pageSize).ToListAsync();
-        return new PaginatedList<T>(items, count, pageNUmber, pageSize);
+        int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
+        int currentPage = page;
+
+        int startPage = currentPage - 5;
+        int endPage = currentPage + 4;
+
+        if (startPage<=0)
+        {
+            endPage = endPage - (startPage - 1);
+            startPage = 1;
+        }
+
+        if (endPage > totalPages)
+        {
+            endPage = totalPages;
+            if (endPage>10)
+            {
+                startPage = endPage - 9;
+            }
+        }
+
+        TotalItems = totalItems;
+        CurrentPage = currentPage;
+        PageSize = pageSize;
+        TotalPages = totalPages;
+        StartPage = startPage;
+        EndPage = endPage;
     }
+
 }
