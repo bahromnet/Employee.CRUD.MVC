@@ -48,8 +48,8 @@
                 <td>@employee.HireDate</td>
                 <td>
                     <div class="btn-group">
-                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-sm btn-info">Edit</a>
-                        <a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-sm btn-primary ml-1">Details</a>
+                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-sm btn-primary ml-1">Edit</a>
+                        @*<a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-sm btn-primary ml-1">Details</a>*@
                         <a asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-sm btn-danger">Delete</a>
                     </div>
                 </td>
@@ -59,3 +59,80 @@
 </table>
 
 <partial name="_pager" model="@paginatedList" />
+
+<!-- Update -->
+<div class="modal modal-fullscreen" id="editEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateEmployeeForm" method="post" action="">
+                    <div class="mb-3">
+                        <label class="form-label">Full name</label>
+                        <input type="text" class="form-control" id="txtFullName" placeholder="full name...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <select class="form-select" id="cboDepartment"></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Salary</label>
+                        <input type="text" class="form-control" id="txtSalary" placeholder="salary...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hire Date</label>
+                        <input type="datetime" class="form-control" id="txtHireDate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary button-save-changes-employee" onclick="updateEmployee()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var editEmployeeModal = document.getElementById('editEmployee');
+        var updateForm = document.getElementById('updateEmployeeForm');
+        var employeeIdInput = document.getElementById('txtEmployeeId');
+
+        editEmployeeModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var recipient = button.getAttribute('data-bs-whatever');
+            var modalTitle = editEmployeeModal.querySelector('.modal-title');
+            var modalBodyInput = editEmployeeModal.querySelector('.modal-body input');
+
+            modalTitle.textContent = 'Edit for user ' + recipient;
+            modalBodyInput.value = recipient;
+
+            // Set the employee ID in the form action
+            updateForm.action = '/Employee/Update/' + recipient;
+        });
+
+        function hideRow(rowId) {
+            var row = document.getElementById(rowId);
+            row.style.display = "none";
+            const btn = document.getElementById("cancelremove");
+            btn.addEventListener("click", function () {
+                row.style.display = "table-row";
+            });
+
+        }
+
+        function updateEmployee() {
+            // Submit the form
+            updateForm.submit();
+        }
+    </script>
+}
+
+

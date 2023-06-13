@@ -9,4 +9,5 @@ public class Employee : BaseEntity
     public Department Department { get; set; }
     public decimal Salary { get; set; }
     public DateTime HireDate { get; set; } = DateTime.Now;
+    //public string? PicUrl { get; set; } = string.Empty;
 }
